@@ -89,7 +89,7 @@
         };
 
         let state = 'init';
-        const history = [];
+        let history = [];
 
 
         const getResult = () => {
@@ -121,6 +121,17 @@
         const form = document.querySelector("#qs-form");
         form.addEventListener("submit", (event) => {
             event.preventDefault();
+            if (history.length === 7) {
+                alert(getResult());
+                history = [];
+            } else {
+                if(form[0].checked) {
+                    jumpToState(1);
+                } else  {
+                    jumpToState(0);
+                }
+            }
+
         })
     </script>
 
