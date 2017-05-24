@@ -51,14 +51,18 @@
             чисел в двоичные путем деления 2.
         </p>
 
-        <div>
-
+        <div id="form">
+            <h4 id="question">Загадайте число от 0 до 123. Задуманное число делится на 2 без остатка?</h4>
+            <form id="qs-form">
+                <label>
+                    делится?
+                    <input type="checkbox" name="qs">
+                </label>
+                <input type="submit" value="Потвердить">
+            </form>
         </div>
     </div>
 </div>
-
-
-
     <script>
         'use strict';
 
@@ -113,6 +117,11 @@
 //                alert(getResult());
 //            }
 //        }
+
+        const form = document.querySelector("#qs-form");
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+        })
     </script>
 
 </body>
