@@ -7,12 +7,15 @@
     <style>
         body {
             background-color: rgb(200, 200, 200);
-            font-family: "Helvetica Neue";
+            font-family: "Helvetica Neue", Helvetica, sans-serif;
+            font-size: 1.1em;
+            color: rgb(51, 51, 51);
         }
 
         #container {
             display: flex;
             flex-direction: column;
+            padding: 70px;
         }
 
         #content {
@@ -23,12 +26,67 @@
 
             font-size: 14px;
             box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
-            padding: 15px;
+            padding: 20px 70px 60px;
             border-radius: 10px;
         }
+
         #topic {
             text-align: center;
             margin-bottom: 50px;
+        }
+
+        ol > li:last-child {
+            font-weight: 700;
+        }
+
+        #form {
+            width: 50%;
+            min-width: 100px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        button {
+            font-size: 110%;
+            padding: 5px;
+            width: 100px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        h1 {
+            font-size: 180%;
+            margin: 20px;
+        }
+
+        h2 {
+            font-size: 130%;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 110%;
+            margin: 20px;
+        }
+
+        p {
+            padding-bottom: 10px;
+        }
+
+        #reload {
+            display: none;
+        }
+
+        #array {
+            text-align: center;
+            color: rgb(150, 150, 150);
+            padding-bottom: 10px;
+        }
+
+        #astates {
+            font-size: 120%;
         }
     </style>
 </head>
@@ -51,15 +109,20 @@
             чисел в двоичные путем деления 2.
         </p>
 
+        <div id="array">
+            Массив состояний:
+            <div id="astates">[]</div>
+        </div>
+
+        <ol>
+            <li>Загадайте число от 0 до 123.</li>
+            <li>Остаётся ли остаток после деления задуманного числа на 2?</li>
+        </ol>
+
         <div id="form">
-            <h4 id="question">Загадайте число от 0 до 123. Задуманное число делится на 2 без остатка?</h4>
-            <form id="qs-form">
-                <label>
-                    делится?
-                    <input type="checkbox" name="qs">
-                </label>
-                <input type="submit" value="Потвердить">
-            </form>
+            <button type="button" id="yes">Да</button>
+            <button type="button" id="no">Нет</button>
+            <button type="button" id="reload">Ещё раз!</button>
         </div>
     </div>
 </div>
@@ -102,10 +165,12 @@
         const jumpToState = (signal) => {
             state = states[state][signal];
             history.push(functions[state](signal));
+
+            document.querySelector('#astates').innerHTML = `[${history.join(', ')}]`;
         };
 
 
-        let number = 122;
+        // let number = 122;
 
 //        for (let i = 0; i < 8; i++) {
 //            const ostatok = number % 2;
@@ -118,21 +183,51 @@
 //            }
 //        }
 
-        const form = document.querySelector("#qs-form");
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
+        const ol = document.querySelector('ol');
+
+        const addLi = (text) => {
+            const li = document.createElement('LI');
+
+            li.innerHTML = text;
+            ol.appendChild(li);
+        };
+
+        const appendLi = (text) => {
+            const li = document.querySelector('ol > li:last-child');
+
+            li.innerHTML += `<br>${text}`;
+        };
+
+
+        const onDecide = (signal) => {
+            jumpToState(signal);
+            appendLi(signal === 1 ? '&mdash; Да.' : '&mdash; Нет.');
+
             if (history.length === 7) {
-                alert(getResult());
-                history = [];
-            } else {
-                if(form[0].checked) {
-                    jumpToState(1);
-                } else  {
-                    jumpToState(0);
-                }
+                addLi(`Вы загадали число: ${getResult()}`);
+
+                document.querySelector('#yes').style.display = 'none';
+                document.querySelector('#no').style.display = 'none';
+                document.querySelector('#reload').style.display = 'inherit';
+
+                return;
             }
 
-        })
+            addLi('Остаётся ли остаток после полученного частного на два?');
+        };
+
+
+        document.querySelector('#yes').addEventListener('click', () => {
+            onDecide(1);
+        });
+
+        document.querySelector('#no').addEventListener('click', () => {
+            onDecide(0);
+        });
+
+        document.querySelector('#reload').addEventListener('click', () => {
+            location.reload();
+        });
     </script>
 
 </body>
