@@ -7,28 +7,55 @@
     <style>
         body {
             background-color: rgb(200, 200, 200);
+            font-family: "Helvetica Neue";
         }
 
         #container {
             display: flex;
-            flex: 1;
+            flex-direction: column;
         }
 
         #content {
             background-color: rgb(255, 255, 255);
 
-            width: 200px;
-            height: 200px;
+            margin: auto;
+            width: 70%;
+
+            font-size: 14px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+            padding: 15px;
+            border-radius: 10px;
+        }
+        #topic {
+            text-align: center;
+            margin-bottom: 50px;
         }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <div id="content">
+
+<div id="container">
+    <div id="content">
+        <div id="topic">
+            <h1>Домашнаяя работа по дисциплине: "Прикладная теория цифровых автоматов"</h1>
+            <h2>Володин Сергей</h2>
+            <h2>Пешков Сергей</h2>
+            <h2>группа ИУ6-43</h2>
+            <h3>Вариант 12</h3>
+        </div>
+        <h3>Задание: </h3>
+        <p>
+            Отгадывание числа от 0 до 123. Задаются вопросы: остается ли остаток после деления задуманного числа на 2?
+            Остается ли остаток после деления полученного частного на 2? И т.д. Использовать алгоритм перевода десятичных
+            чисел в двоичные путем деления 2.
+        </p>
+
+        <div>
 
         </div>
     </div>
+</div>
 
 
 
@@ -76,16 +103,16 @@
 
         let number = 122;
 
-        for (let i = 0; i < 8; i++) {
-            const ostatok = number % 2;
-            number = Math.floor(number / 2);
-
-            jumpToState(ostatok);
-
-            if (history.length === 8) {
-                alert(getResult());
-            }
-        }
+//        for (let i = 0; i < 8; i++) {
+//            const ostatok = number % 2;
+//            number = Math.floor(number / 2);
+//
+//            jumpToState(ostatok);
+//
+//            if (history.length === 8) {
+//                alert(getResult());
+//            }
+//        }
     </script>
 
 </body>
